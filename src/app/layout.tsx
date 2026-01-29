@@ -15,10 +15,19 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mark Estella | Software Engineer | AI Integration",
+  title: "Mckbyte Portfolio",
   description: "Portfolio of Mark Estella, a Software Engineer specializing in AI integration, full-stack development, and automation.",
+  manifest: "/manifest.json",
   keywords: ["Software Engineer", "Full-Stack Developer", "AI Integration", "React", "Next.js", "TypeScript", ".NET"],
   authors: [{ name: "Mark Estella" }],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Mckbyte Portfolio",
+  },
+  icons: {
+    apple: "/assets/shortcut-icon.png",
+  },
   openGraph: {
     title: "Mark Estella | Software Engineer",
     description: "Versatile software engineer specializing in automation, backend development, and full-stack application delivery.",
