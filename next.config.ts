@@ -20,6 +20,9 @@ const nextConfig: NextConfig = {
 
   // Strict mode for development
   reactStrictMode: true,
+
+  // Add empty turbopack config to silence the error
+  turbopack: {},
 };
 
 module.exports = withPWA(nextConfig);
