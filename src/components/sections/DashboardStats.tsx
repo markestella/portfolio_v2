@@ -15,10 +15,9 @@ interface StatCardProps {
   suffix?: string;
   description?: string;
   trend?: { value: number; isPositive: boolean };
-  color?: string;
 }
 
-function StatCard({ value, label, icon, suffix = '', description, trend, color = 'blue' }: StatCardProps) {
+function StatCard({ value, label, icon, suffix = '', description, trend }: StatCardProps) {
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {

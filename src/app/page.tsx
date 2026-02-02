@@ -1,25 +1,27 @@
-// Main portfolio page with all sections
-import HeroSection from "@/components/sections/HeroSection";
-import DashboardStats from "@/components/sections/DashboardStats";
-import AboutSection from "@/components/sections/AboutSection";
-import ProjectsSection from "@/components/sections/ProjectsSection";
-import TechStackSection from "@/components/sections/TechStackSection";
-import CertificatesSection from "@/components/sections/CertificatesSection";
-import ContactSection from "@/components/sections/ContactSection";
+// Main portfolio page with Vintage IDE design
+import IDEWrapper from "@/components/layout/IDEWrapper";
+import ContentWithLines from "@/components/layout/ContentWithLines";
+import VintageHeroSection from "@/components/sections/VintageHeroSection";
+import VintageAboutSection from "@/components/sections/VintageAboutSection";
+import VintageProjectsSection from "@/components/sections/VintageProjectsSection";
+import VintageTechSection from "@/components/sections/VintageTechSection";
+import VintageCertificatesSection from "@/components/sections/VintageCertificatesSection";
+import VintageContactSection from "@/components/sections/VintageContactSection";
 
 export default function Home() {
   return (
-    <>
-      <div id="home">
-        <HeroSection />
-      </div>
-      <DashboardStats />
-      <AboutSection />
-      <ProjectsSection />
-      <TechStackSection />
-      <CertificatesSection />
-      <ContactSection />
-    </>
+    <IDEWrapper>
+      <ContentWithLines>
+        <div id="home">
+          <VintageHeroSection />
+        </div>
+        <VintageAboutSection />
+        <VintageProjectsSection />
+        <VintageTechSection />
+        <VintageCertificatesSection />
+        <VintageContactSection />
+      </ContentWithLines>
+    </IDEWrapper>
   );
 }
 

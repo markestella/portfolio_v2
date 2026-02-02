@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Inter } from "next/font/google";
+import { Merriweather, Lora, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 
-const inter = Inter({
-  variable: "--font-inter",
+const merriweather = Merriweather({
+  variable: "--font-merriweather",
   subsets: ["latin"],
+  weight: ["300", "400", "700", "900"],
+});
+
+const lora = Lora({
+  variable: "--font-lora",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -15,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mckbyte Portfolio",
+  title: "mckbyte | Portfolio",
   description: "Portfolio of Mark Estella, a Software Engineer specializing in AI integration, full-stack development, and automation.",
   manifest: "/manifest.json",
   keywords: ["Software Engineer", "Full-Stack Developer", "AI Integration", "React", "Next.js", "TypeScript", ".NET"],
@@ -23,13 +28,13 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Mckbyte Portfolio",
+    title: "mckbyte Portfolio",
   },
   icons: {
-    apple: "/assets/shortcut-icon.png",
+    apple: "/shortcut-icon.png",
   },
   openGraph: {
-    title: "Mark Estella | Software Engineer",
+    title: "mckbyte | Software Engineer",
     description: "Versatile software engineer specializing in automation, backend development, and full-stack application delivery.",
     type: "website",
   },
@@ -43,13 +48,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased bg-[var(--bg-primary)] min-h-screen flex flex-col`}
+        className={`${merriweather.variable} ${lora.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <Header />
-        <main className="flex-1 pt-16">
-          {children}
-        </main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
