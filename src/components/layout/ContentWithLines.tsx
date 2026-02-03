@@ -20,26 +20,59 @@ export default function ContentWithLines({
     if (!contentRef.current) return;
 
     const calculateLines = () => {
-      const contentHeight = contentRef.current?.scrollHeight || 0;
-      const lineHeight = 32; // Match the line-number height in CSS
-      const lines = Math.ceil(contentHeight / lineHeight);
-      setLineCount(lines);
+      if (!contentRef.current) return;
+      
+      const styles = window.getComputedStyle(contentRef.current);
+      const verticalPadding = (parseFloat(styles.paddingTop) || 0) + (parseFloat(styles.paddingBottom) || 0);
+      
+      // Calculate height based on content box only (excluding padding)
+      const contentHeight = contentRef.current.clientHeight - verticalPadding;
+      const lineHeight = 32;
+      
+      const lines = Math.floor(contentHeight / lineHeight);
+      setLineCount(Math.max(1, lines));
     };
 
-    calculateLines();
+    // Use a small delay to ensure rendering is complete
+    const timer = setTimeout(calculateLines, 100);
     
     // Recalculate on resize
-    const resizeObserver = new ResizeObserver(calculateLines);
-    resizeObserver.observe(contentRef.current);
+    const resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+           if (entry.target === contentRef.current) {
+             // entry.contentRect.height excludes padding/border
+             const contentHeight = entry.contentRect.height;
+             const lineHeight = 32;
+             const lines = Math.floor(contentHeight / lineHeight);
+             
+             setLineCount(prev => {
+                const newLines = Math.max(1, lines);
+                return prev !== newLines ? newLines : prev;
+             });
+           }
+        }
+    });
 
-    return () => resizeObserver.disconnect();
+    // Also use MutationObserver to detect content changes
+    const mutationObserver = new MutationObserver(calculateLines);
+
+    if (contentRef.current) {
+      resizeObserver.observe(contentRef.current);
+      mutationObserver.observe(contentRef.current, { childList: true, subtree: true, attributes: true });
+    }
+
+    return () => {
+        resizeObserver.disconnect();
+        mutationObserver.disconnect();
+        clearTimeout(timer);
+    };
   }, [children]);
 
   return (
     <div className="content-with-lines">
       {showLineNumbers && (
         <div className="line-numbers hidden lg:block" aria-hidden="true">
-          {Array.from({ length: Math.max(lineCount, 30) }, (_, i) => (
+          {Array.from({ length: lineCount }, (_, i) => (
             <div key={i} className="line-number">
               {startLine + i}
             </div>

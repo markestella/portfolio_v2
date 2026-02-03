@@ -605,10 +605,6 @@
   .main-content {
     padding: 20px 16px;
   }
-  
-  .ide-tabs {
-    padding-left: 48px;
-  }
 }
 
 @media (max-width: 640px) {
