@@ -4,10 +4,10 @@ import { motion } from 'framer-motion';
 import { experiences } from '@/data/experience';
 
 const skills = [
-  { category: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'], icon: '🎨', level: 92 },
-  { category: 'Backend', items: ['.NET', 'FastAPI', 'Node.js', 'PostgreSQL'], icon: '⚙️', level: 88 },
-  { category: 'DevOps', items: ['Docker', 'Git', 'GitHub Actions', 'Vercel'], icon: '🚀', level: 70 },
-  { category: 'AI/ML', items: ['Semantic Kernel', 'OpenAI', 'LangChain', 'Gemini'], icon: '🤖', level: 75 },
+  { category: 'Frontend & UI', items: ['React', 'Next.js', 'Ionic React', 'Tailwind CSS', 'ShadCN UI'], icon: '🎨', level: 92 },
+  { category: 'Backend & Automation', items: ['FastAPI', '.NET Core', 'ExpressJS', 'VBA', 'Google Apps Script'], icon: '⚙️', level: 88 },
+  { category: 'DevOps & Cloud', items: ['Docker', 'GitHub Actions', 'Terraform', 'Azure', 'AWS'], icon: '🚀', level: 82 },
+  { category: 'AI & Data', items: ['Semantic Kernel', 'RAG', 'OpenAI', 'Mistral', 'PostgreSQL Vector DB'], icon: '🤖', level: 84 },
 ];
 
 export default function VintageAboutSection() {
@@ -44,19 +44,21 @@ export default function VintageAboutSection() {
             </div>
             <div className="space-y-4 text-[var(--parchment-200)] leading-relaxed">
               <p>
-                I&apos;m a passionate <span className="syntax-keyword">Software Engineer</span> based in 
-                Davao City, Philippines with over <span className="syntax-number">4</span> years of 
-                experience in building web applications and integrating AI solutions.
+                I&apos;m a results-driven <span className="syntax-keyword">Software Engineer</span> with expertise in full-stack
+                application development, cloud infrastructure, and AI-powered solutions.
               </p>
               <p>
-                My journey in software development started during my college years studying{' '}
-                <span className="syntax-string">Computer Engineering</span>, and I&apos;ve been 
-                hooked ever since. I love solving complex problems and turning ideas into reality 
-                through clean, efficient code.
+                Over the years, I&apos;ve worked with technologies such as TypeScript, Next.js, React, .NET,
+                Entity Framework Core, PostgreSQL, Docker, Terraform, Azure, AWS, and many other modern
+                development tools. I&apos;ve also gained experience with DevOps practices, including cloud
+                deployments, infrastructure automation, CI/CD pipelines, and managing applications in
+                both Azure and AWS environments.
               </p>
               <p>
-                When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing to 
-                open-source projects, or sharing knowledge with the developer community.
+                One of the projects I&apos;m most proud of is an AI-powered Slack chatbot that uses Retrieval
+                Augmented Generation with a vector database to answer questions based only on relevant
+                uploaded documents. I automated the Slack app provisioning and installation flow so teams
+                can onboard through a configuration link instead of manual setup.
               </p>
             </div>
           </div>
@@ -119,7 +121,7 @@ export default function VintageAboutSection() {
           </div>
           
           <div className="space-y-4">
-            {experiences.slice(0, 3).map((exp, index) => (
+            {experiences.map((exp, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 10 }}

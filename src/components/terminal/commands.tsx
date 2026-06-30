@@ -107,22 +107,23 @@ export function createAsciiTable(
 // Sample data that can be customized
 export const portfolioData = {
   name: "mckbyte",
-  role: "Full-Stack Developer & Digital Craftsman",
+  role: "Software Engineer",
   
   skills: {
-    frontend: ["React/Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vue.js"],
-    backend: ["Node.js", "Python", ".NET/C#", "FastAPI", "Express"],
-    database: ["PostgreSQL", "MongoDB", "Redis", "Firebase", "SQLite"],
-    devops: ["AWS", "Docker", "CI/CD", "Vercel", "GitHub Actions"],
-    tools: ["Git", "VS Code", "Figma", "Postman", "Linux"],
+    frontend: ["React", "Next.js", "Ionic React", "Tailwind CSS", "ShadCN UI", "HTML", "CSS"],
+    backend: ["FastAPI", ".NET Core", "ExpressJS", "VBA", "Google Apps Script"],
+    database: ["PostgreSQL", "PgAdmin 4", "Vector DB", "Entity Framework Core", "Alembic Migrations"],
+    ai: ["Microsoft Semantic Kernel", "RAG", "OpenAI", "Mistral", "Assembly AI"],
+    devops: ["Docker", "Git", "GitHub Actions", "Terraform", "Azure", "AWS"],
+    tools: ["Canva", "CapCut", "Filmora", "Adobe Photoshop", "NEMO Drive Test", "Arduino"],
   },
 
   projects: [
     {
       id: "ai-chatbot",
-      title: "AI-Powered Chatbot",
-      description: "Intelligent conversational interface with natural language processing capabilities",
-      tech: ["Next.js", "OpenAI", "TypeScript", "Tailwind"],
+      title: "AI-Powered Slack Chatbot",
+      description: "RAG chatbot with automated Slack app provisioning and document-grounded answers",
+      tech: ["Microsoft Semantic Kernel", "PostgreSQL Vector DB", "Slack", "RAG"],
       status: "completed",
       link: "#",
     },
@@ -130,7 +131,7 @@ export const portfolioData = {
       id: "portfolio-api",
       title: "Portfolio API",
       description: "RESTful backend service for portfolio management and contact handling",
-      tech: ["FastAPI", "PostgreSQL", "Docker", "AWS"],
+      tech: [".NET", "SendGrid", "GitHub Actions", "Render"],
       status: "completed",
       link: "#",
     },
@@ -138,7 +139,7 @@ export const portfolioData = {
       id: "recipe-finder",
       title: "Recipe Finder",
       description: "Smart recipe discovery application with dietary filters and meal planning",
-      tech: ["React", "Node.js", "MongoDB", "Express"],
+      tech: ["Next.js", "Tailwind CSS", "TheMealDB API", "Vercel"],
       status: "completed",
       link: "#",
     },
@@ -146,23 +147,23 @@ export const portfolioData = {
 
   experience: [
     {
-      role: "Senior Software Engineer",
-      company: "Tech Company",
-      period: "2022 - Present",
+      role: "Intermediate Software Engineer",
+      company: "Netzon Global Technology Inc.",
+      period: "Apr 2024 - Present",
       highlights: [
-        "Led development of microservices architecture",
-        "Mentored junior developers and conducted code reviews",
-        "Reduced API response time by 40% through optimization",
+        "Developed full-stack web and mobile applications with React, Next.js, TypeScript, Ionic, FastAPI, and .NET",
+        "Built RAG chatbot solutions using Microsoft Semantic Kernel and PostgreSQL vector databases",
+        "Provisioned cloud infrastructure using Terraform, Azure, and AWS services",
       ],
     },
     {
-      role: "Full-Stack Developer",
-      company: "Startup Inc.",
-      period: "2020 - 2022",
+      role: "Junior Software Engineer",
+      company: "Netzon Global Technology Inc.",
+      period: "Oct 2021 - Apr 2024",
       highlights: [
-        "Built customer-facing web applications from scratch",
-        "Implemented CI/CD pipelines using GitHub Actions",
-        "Integrated third-party APIs for payment and analytics",
+        "Created VBA automation tools for Excel-based data workflows",
+        "Developed Python APIs with FastAPI and PostgreSQL",
+        "Managed Dockerized services and Alembic migrations",
       ],
     },
   ],

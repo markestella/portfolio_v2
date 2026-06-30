@@ -6,14 +6,17 @@ import { techStack } from '@/data/techStack';
 
 // Highlighted tech to show with icons
 const highlightedTech = [
-  'React', 'TypeScript', 'Next.js', 'Nodejs', 'Python', 'Tailwind CSS', 'PostgreSQL', 'Docker'
+  'React', 'TypeScript', 'Next.js', 'Python', 'FastAPI', 'PostgreSQL', 'Docker', 'Azure'
 ];
 
 // Other tech to show as text-only arrays
 const secondaryStack = {
-  'languages': ['Javascript', 'C#', 'C++', 'Java', 'PHP'],
-  'frameworks': ['Vue', 'Express', '.Net', 'FastAPI', 'Ionic'],
-  'tools': ['Git', 'AWS', 'Firebase', 'Vercel', 'Mistral AI', 'Figma']
+  languages: ['JavaScript', 'C# .NET', 'C++', 'YAML', 'VBA', 'Google Apps Script'],
+  frontend_ui: ['Ionic React', 'Tailwind CSS', 'ShadCN UI', 'HTML', 'CSS'],
+  backend_automation: ['.NET Core', 'ExpressJS', 'Entity Framework Core', 'Alembic Migrations'],
+  ai_data: ['Microsoft Semantic Kernel', 'RAG', 'OpenAI', 'Mistral', 'Assembly AI', 'Vector DB'],
+  cloud_devops: ['Git', 'GitHub Actions', 'Terraform', 'AWS Lambda', 'Amazon Connect', 'AWS Q', 'AWS S3', 'AWS DynamoDB'],
+  other_tools: ['Canva', 'CapCut', 'Filmora', 'Adobe Photoshop', 'NEMO Drive Test', 'Arduino'],
 };
 
 export default function VintageTechSection() {

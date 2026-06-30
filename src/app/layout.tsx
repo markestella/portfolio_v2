@@ -21,9 +21,9 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "mckbyte | Portfolio",
-  description: "Portfolio of Mark Estella, a Software Engineer specializing in AI integration, full-stack development, and automation.",
+  description: "Portfolio of Mark Estella, a Software Engineer specializing in full-stack development, cloud infrastructure, automation, and AI-powered RAG solutions.",
   manifest: "/manifest.json",
-  keywords: ["Software Engineer", "Full-Stack Developer", "AI Integration", "React", "Next.js", "TypeScript", ".NET"],
+  keywords: ["Software Engineer", "Full-Stack Developer", "AI RAG", "React", "Next.js", "TypeScript", ".NET", "Azure", "AWS", "Terraform"],
   authors: [{ name: "Mark Estella" }],
   appleWebApp: {
     capable: true,
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "mckbyte | Software Engineer",
-    description: "Versatile software engineer specializing in automation, backend development, and full-stack application delivery.",
+    description: "Software engineer specializing in full-stack application development, cloud infrastructure, automation, and AI-powered RAG solutions.",
     type: "website",
   },
 };

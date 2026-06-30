@@ -8,11 +8,12 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { techStack } from '@/data/techStack';
 
 const categories = {
-  'Languages': { icon: '💻', color: 'var(--accent-cyan)', techs: ['TypeScript', 'Javascript', 'Python', 'C#', 'C++', 'HTML', 'YAML', 'PHP', 'Java'] },
-  'Frameworks': { icon: '⚡', color: 'var(--blue-400)', techs: ['React', 'Next.js', 'Vite', '.Net', 'FastAPI', 'Ionic', 'Tailwind CSS', 'Vue', 'Flutter', 'Node.js'] },
-  'Databases': { icon: '🗄️', color: 'var(--accent-yellow)', techs: ['PostgreSQL', 'Firebase', 'AWS DynamoDB', 'MongoDB', 'MySQL', 'SQLite'] },
-  'DevOps & Tools': { icon: '🔧', color: 'var(--accent-teal)', techs: ['Docker', 'Git', 'Github', 'Gitlab', 'Vercel', 'Npm', 'Visual Studio Code', 'Rider IDE'] },
-  'Cloud & AI': { icon: '☁️', color: 'var(--accent-purple)', techs: ['AWS', 'AWS Lambda', 'AWS S3', 'Azure', 'OpenAI', 'Mistral AI', 'Amazon Connect', 'AWS Appflow', 'Pytorch', 'Tensorflow'] },
+  'Languages & Scripting': { icon: '💻', color: 'var(--accent-cyan)', techs: ['Python', 'VBA', 'C# .NET', 'TypeScript', 'JavaScript', 'C++', 'YAML', 'Google Apps Script'] },
+  'Frontend & UI': { icon: '⚡', color: 'var(--blue-400)', techs: ['React', 'Next.js', 'Ionic React', 'Tailwind CSS', 'ShadCN UI', 'HTML', 'CSS'] },
+  'Backend & Automation': { icon: '🔧', color: 'var(--accent-teal)', techs: ['FastAPI', '.NET Core', 'ExpressJS', 'Google Apps Script', 'VBA'] },
+  'AI & Data': { icon: '🗄️', color: 'var(--accent-yellow)', techs: ['Microsoft Semantic Kernel', 'RAG', 'OpenAI', 'Mistral', 'Assembly AI', 'PostgreSQL', 'PgAdmin 4', 'Vector DB', 'Entity Framework Core', 'Alembic Migrations'] },
+  'DevOps & Cloud': { icon: '☁️', color: 'var(--accent-purple)', techs: ['Docker', 'Git', 'GitHub Actions', 'Terraform', 'Azure', 'AWS', 'AWS Lambda', 'Amazon Connect', 'AWS Q', 'AWS S3', 'AWS DynamoDB'] },
+  'Other Tools': { icon: '🛠️', color: 'var(--accent-green)', techs: ['Canva', 'CapCut', 'Filmora', 'Adobe Photoshop', 'NEMO Drive Test', 'Arduino'] },
 };
 
 export default function TechStackSection() {
@@ -119,9 +120,9 @@ export default function TechStackSection() {
         {/* Summary Stats */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: 'Languages', count: 9, icon: '💻', color: 'var(--accent-cyan)' },
-            { label: 'Frameworks', count: 10, icon: '⚡', color: 'var(--blue-400)' },
-            { label: 'Databases', count: 6, icon: '🗄️', color: 'var(--accent-yellow)' },
+            { label: 'Languages', count: 8, icon: '💻', color: 'var(--accent-cyan)' },
+            { label: 'Frontend/UI', count: 7, icon: '⚡', color: 'var(--blue-400)' },
+            { label: 'AI & Data', count: 10, icon: '🗄️', color: 'var(--accent-yellow)' },
             { label: 'Tools', count: techStack.length, icon: '🛠️', color: 'var(--accent-teal)' },
           ].map((stat) => (
             <Card key={stat.label} className="stat-card">

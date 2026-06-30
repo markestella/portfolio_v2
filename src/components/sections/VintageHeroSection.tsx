@@ -7,8 +7,8 @@ import { motion } from 'framer-motion';
 const roles = [
   'Software Engineer',
   'Full-Stack Developer',
-  'AI Integration Specialist',
-  'Backend Developer',
+  'Cloud Infrastructure Engineer',
+  'AI/RAG Solutions Developer',
 ];
 
 export default function VintageHeroSection() {
@@ -107,11 +107,10 @@ export default function VintageHeroSection() {
 
           {/* Description */}
           <p className="text-lg sm:text-xl text-[var(--parchment-300)] max-w-2xl leading-relaxed">
-            Crafting exceptional digital experiences with modern technologies.
-            Specialized in{' '}
+            Building full-stack applications, cloud infrastructure, and AI-powered tools with{' '}
             <span className="text-[var(--syntax-function)]">full-stack development</span>,{' '}
-            <span className="text-[var(--syntax-type)]">AI integration</span>, and{' '}
-            <span className="text-[var(--syntax-string)]">scalable solutions</span>.
+            <span className="text-[var(--syntax-type)]">RAG chatbot solutions</span>, and{' '}
+            <span className="text-[var(--syntax-string)]">scalable Azure and AWS deployments</span>.
           </p>
 
           {/* CTA Buttons */}

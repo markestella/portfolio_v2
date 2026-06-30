@@ -11,10 +11,10 @@ import { Separator } from '@/components/ui/separator';
 import { experiences } from '@/data/experience';
 
 const skills = [
-  { category: 'Frontend', items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'], icon: '🎨', color: 'var(--accent-cyan)', level: 92 },
-  { category: 'Backend', items: ['.NET', 'FastAPI', 'Node.js', 'PostgreSQL'], icon: '⚙️', color: 'var(--blue-400)', level: 88 },
-  { category: 'DevOps', items: ['Docker', 'Git', 'GitHub Actions', 'Vercel'], icon: '🚀', color: 'var(--accent-teal)', level: 70 },
-  { category: 'AI/ML', items: ['Semantic Kernel', 'OpenAI', 'LangChain', 'Gemini'], icon: '🤖', color: 'var(--accent-purple)', level: 75 },
+  { category: 'Frontend & UI', items: ['React', 'Next.js', 'Ionic React', 'Tailwind CSS', 'ShadCN UI'], icon: '🎨', color: 'var(--accent-cyan)', level: 92 },
+  { category: 'Backend & Automation', items: ['FastAPI', '.NET Core', 'ExpressJS', 'VBA', 'Google Apps Script'], icon: '⚙️', color: 'var(--blue-400)', level: 88 },
+  { category: 'DevOps & Cloud', items: ['Docker', 'GitHub Actions', 'Terraform', 'Azure', 'AWS'], icon: '🚀', color: 'var(--accent-teal)', level: 82 },
+  { category: 'AI & Data', items: ['Semantic Kernel', 'RAG', 'OpenAI', 'Mistral', 'PostgreSQL Vector DB'], icon: '🤖', color: 'var(--accent-purple)', level: 84 },
 ];
 
 export default function AboutSection() {
@@ -39,7 +39,7 @@ export default function AboutSection() {
             Get to Know <span className="gradient-text">Me</span>
           </h2>
           <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
-            A passionate developer with a love for creating beautiful, functional, and user-friendly applications.
+            Results-driven software engineering across full-stack applications, cloud infrastructure, automation, and AI-powered solutions.
           </p>
         </div>
 
@@ -132,17 +132,18 @@ export default function AboutSection() {
 
                     <div className="space-y-4 text-[var(--text-secondary)] leading-relaxed">
                       <p>
-                        I&apos;m a passionate <span className="text-[var(--blue-400)]">Software Engineer</span> based in Davao City, Philippines 
-                        with over 4 years of experience in building web applications and integrating AI solutions.
+                        I&apos;m a results-driven <span className="text-[var(--blue-400)]">Software Engineer</span> with expertise in full-stack
+                        application development, cloud infrastructure, and AI-powered solutions.
                       </p>
                       <p>
-                        My journey in software development started during my college years, and I&apos;ve been 
-                        hooked ever since. I love solving complex problems and turning ideas into reality 
-                        through clean, efficient code.
+                        I work with TypeScript, Next.js, React, .NET, Entity Framework Core, PostgreSQL, Docker,
+                        Terraform, Azure, AWS, and modern DevOps workflows including cloud deployments,
+                        infrastructure automation, CI/CD pipelines, and application management in Azure and AWS.
                       </p>
                       <p>
-                        When I&apos;m not coding, you&apos;ll find me exploring new technologies, contributing to 
-                        open-source projects, or sharing knowledge with the developer community.
+                        One of the projects I&apos;m most proud of is an AI-powered Slack chatbot that uses Retrieval
+                        Augmented Generation with a vector database to answer questions based only on relevant
+                        uploaded documents, with automated Slack app provisioning through an onboarding link.
                       </p>
                     </div>
 

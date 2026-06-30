@@ -14,12 +14,12 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'portfolio',
-    title: 'Portfolio (Pure HTML&CSS, JS)',
+    title: 'Portfolio (HTML, CSS, JavaScript)',
     date: 'July 2025',
     image: '/project_images/Portfolio_Frontend.png',
     video: 'RqHt5NTBnbk?si=c0JNRKC1F9G-ZB4q',
-    description: 'This is my interactive and responsive personal portfolio built with HTML, CSS and Plain Javascript, hosted on GitHub Pages. It showcases my technical skills, projects, and professional experience in software engineering, AI chatbot development, backend automation, and modern UI design.',
-    tech: ['HTML', 'CSS', 'Javascript'],
+    description: 'An interactive and responsive personal portfolio built with HTML, CSS, and JavaScript, hosted on GitHub Pages. It showcases my technical skills, projects, and professional experience in software engineering, AI chatbot development, backend automation, and modern UI design.',
+    tech: ['HTML', 'CSS', 'JavaScript'],
     codeLink: 'https://github.com/markestella/portfolio',
     demoLink: 'https://markestella.github.io/portfolio',
     category: 'Frontend'
@@ -42,8 +42,8 @@ export const projects: Project[] = [
     date: 'Aug 2025',
     image: '/project_images/AI_Chatbot_Image.png',
     video: 'lxtQqa40R0g?si=lL-jD7YWaONBbKrd',
-    description: 'A full-stack chatbot application showcasing a React + Vite frontend with ShadCN UI and TailwindCSS, connected to a .NET backend API with PostgreSQL and integrated with Gemini AI for intelligent chat responses. Demonstrates real-time chat interactions, clean UI, and backend functionality in a single project.',
-    tech: ['React + Vite', 'Typescript', 'C#', '.Net', 'Docker', 'PostgreSQL', 'Tailwind CSS', 'ShadcnUI', 'Tanstack Router', 'Gemini', 'Entity Framework', 'JWT Authentication', 'Swagger/Swashbuckle', 'Github Actions', 'Vercel'],
+    description: 'An AI-powered Slack chatbot built with Retrieval Augmented Generation, Microsoft Semantic Kernel, and PostgreSQL vector storage. The project automates Slack app provisioning and installation through an onboarding link, then answers team questions using only relevant uploaded documents.',
+    tech: ['React', 'TypeScript', 'C# .NET', 'Docker', 'PostgreSQL', 'Vector DB', 'Microsoft Semantic Kernel', 'RAG', 'Tailwind CSS', 'ShadCN UI', 'Entity Framework Core', 'GitHub Actions', 'Azure'],
     codeLink: 'https://github.com/markestella/ai-chat-full-stack',
     demoLink: 'https://full-stack-ai-demo.vercel.app/',
     category: 'Full Stack & AI'

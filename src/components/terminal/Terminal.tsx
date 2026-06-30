@@ -89,24 +89,24 @@ const createCommands = (): Record<string, Command> => ({
           <span className="json-key">&quot;name&quot;</span>: <span className="json-string">&quot;mckbyte&quot;</span>,
         </div>
         <div>
-          <span className="json-key">&quot;role&quot;</span>: <span className="json-string">&quot;Full-Stack Developer & Digital Craftsman&quot;</span>,
+          <span className="json-key">&quot;role&quot;</span>: <span className="json-string">&quot;Software Engineer&quot;</span>,
         </div>
         <div>
-          <span className="json-key">&quot;philosophy&quot;</span>: <span className="json-string">&quot;Building elegant solutions to complex problems&quot;</span>,
+          <span className="json-key">&quot;focus&quot;</span>: <span className="json-string">&quot;Full-stack applications, cloud infrastructure, and AI-powered solutions&quot;</span>,
         </div>
         <div className="mt-4 pt-4 border-t border-[var(--bg-saddle)]">
           <p style={{ color: "#e8dfc9", lineHeight: "1.8" }}>
-            I&apos;m a passionate developer who believes in the power of clean code and 
-            thoughtful design. With years of experience across the full stack, I 
-            specialize in creating performant web applications that don&apos;t just work—
-            they delight.
+            Results-driven Software Engineer with expertise in full-stack application
+            development, cloud infrastructure, and AI-powered solutions. Skilled in
+            React, Next.js, TypeScript, .NET, Python, FastAPI, Docker, Azure,
+            Terraform, and AWS services.
           </p>
         </div>
         <div className="mt-4">
           <span className="json-key">&quot;interests&quot;</span>: [
-          <span className="json-string">&quot;AI/ML Integration&quot;</span>, 
-          <span className="json-string">&quot;System Design&quot;</span>, 
-          <span className="json-string">&quot;Developer Experience&quot;</span>]
+          <span className="json-string">&quot;RAG Chatbots&quot;</span>, 
+          <span className="json-string">&quot;Cloud Deployments&quot;</span>, 
+          <span className="json-string">&quot;Automation&quot;</span>]
         </div>
       </div>
     ),
@@ -125,20 +125,20 @@ const createCommands = (): Record<string, Command> => ({
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-2">
           <SkillCategory 
-            title="Frontend" 
-            skills={["React/Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"]} 
+            title="Frontend & UI" 
+            skills={["React", "Next.js", "Ionic React", "Tailwind CSS", "ShadCN UI"]} 
           />
           <SkillCategory 
-            title="Backend" 
-            skills={["Node.js", "Python", ".NET/C#", "FastAPI"]} 
+            title="Backend & Automation" 
+            skills={["FastAPI", ".NET Core", "ExpressJS", "VBA", "Google Apps Script"]} 
           />
           <SkillCategory 
-            title="Database" 
-            skills={["PostgreSQL", "MongoDB", "Redis", "Firebase"]} 
+            title="AI & Data" 
+            skills={["Semantic Kernel", "RAG", "OpenAI", "Mistral", "PostgreSQL Vector DB"]} 
           />
           <SkillCategory 
             title="DevOps & Cloud" 
-            skills={["AWS", "Docker", "CI/CD", "Vercel"]} 
+            skills={["Docker", "GitHub Actions", "Terraform", "Azure", "AWS"]} 
           />
         </div>
 
@@ -155,9 +155,9 @@ const createCommands = (): Record<string, Command> => ({
     handler: () => (
       <div className="space-y-6">
         <ProjectCard 
-          title="AI-Powered Chatbot"
-          description="Intelligent conversational interface with natural language processing"
-          tech={["Next.js", "OpenAI", "TypeScript"]}
+          title="AI-Powered Slack Chatbot"
+          description="RAG chatbot with automated Slack app provisioning and document-grounded answers"
+          tech={["Semantic Kernel", "PostgreSQL Vector DB", "Slack", "RAG"]}
           link="#"
         />
         <ProjectCard 
@@ -169,7 +169,7 @@ const createCommands = (): Record<string, Command> => ({
         <ProjectCard 
           title="Recipe Finder"
           description="Smart recipe discovery with dietary filters"
-          tech={["React", "Node.js", "MongoDB"]}
+          tech={["Next.js", "Tailwind CSS", "TheMealDB API"]}
           link="#"
         />
         <div className="mt-4 pt-4 border-t border-[var(--bg-saddle)]">
@@ -187,23 +187,23 @@ const createCommands = (): Record<string, Command> => ({
     handler: () => (
       <div className="space-y-6">
         <ExperienceCard 
-          role="Senior Software Engineer"
-          company="Tech Company"
-          period="2022 - Present"
+          role="Intermediate Software Engineer"
+          company="Netzon Global Technology Inc."
+          period="Apr 2024 - Present"
           highlights={[
-            "Led development of microservices architecture",
-            "Mentored junior developers",
-            "Reduced API response time by 40%"
+            "Developed full-stack web and mobile applications with React, Next.js, TypeScript, Ionic, FastAPI, and .NET",
+            "Built RAG chatbot solutions using Microsoft Semantic Kernel and PostgreSQL vector databases",
+            "Provisioned cloud infrastructure using Terraform, Azure, and AWS services"
           ]}
         />
         <ExperienceCard 
-          role="Full-Stack Developer"
-          company="Startup Inc."
-          period="2020 - 2022"
+          role="Junior Software Engineer"
+          company="Netzon Global Technology Inc."
+          period="Oct 2021 - Apr 2024"
           highlights={[
-            "Built customer-facing web applications",
-            "Implemented CI/CD pipelines",
-            "Integrated third-party APIs"
+            "Created VBA automation tools for Excel-based data workflows",
+            "Developed Python APIs with FastAPI and PostgreSQL",
+            "Managed Dockerized services and Alembic database migrations"
           ]}
         />
       </div>
