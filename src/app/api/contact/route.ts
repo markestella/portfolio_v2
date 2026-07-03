@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { randomUUID } from 'crypto';
 
 interface ContactFormData {
   name: string;
@@ -16,10 +17,15 @@ const escapeHtml = (value: string) =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 
+const normalizeWhitespace = (value: string) => value.trim().replace(/\s+/g, ' ');
+
 export async function POST(request: NextRequest) {
   try {
     const body: ContactFormData = await request.json();
-    const { name, email, subject, message } = body;
+    const name = normalizeWhitespace(body.name || '');
+    const email = normalizeWhitespace(body.email || '');
+    const subject = normalizeWhitespace(body.subject || '');
+    const message = (body.message || '').trim();
 
     // Validate required fields
     if (!name || !email || !subject || !message) {
@@ -54,6 +60,11 @@ export async function POST(request: NextRequest) {
     const safeEmail = escapeHtml(email);
     const safeSubject = escapeHtml(subject);
     const safeMessage = escapeHtml(message);
+    const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER;
+    const contactEmail = process.env.CONTACT_EMAIL || 'mark.estella09@gmail.com';
+    const conversationSubject = `Portfolio Contact from ${name}: ${subject}`;
+    const messageIdDomain = fromEmail?.split('@')[1] || 'markestella.dev';
+    const autoReplyMessageId = `<portfolio-${randomUUID()}@${messageIdDomain}>`;
 
     // Create transporter using SMTP
     const transporter = nodemailer.createTransport({
@@ -66,12 +77,13 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Email content
-    const mailOptions = {
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
-      to: process.env.CONTACT_EMAIL || 'mark.estella09@gmail.com',
+    await transporter.sendMail({
+      from: fromEmail,
+      to: contactEmail,
       replyTo: email,
-      subject: `Portfolio Contact: ${subject}`,
+      subject: conversationSubject,
+      inReplyTo: autoReplyMessageId,
+      references: [autoReplyMessageId],
       text: `
 Name: ${name}
 Email: ${email}
@@ -88,9 +100,9 @@ ${message}
             <span style="color: #f85149;">●</span>
             <span style="margin-left: 10px; color: #8b949e;">new_message.md</span>
           </div>
-          
+
           <p style="color: #3fb950;">## New Portfolio Contact</p>
-          
+
           <table style="margin: 20px 0; color: #e6edf3;">
             <tr>
               <td style="color: #39c5cf; padding-right: 10px;">name:</td>
@@ -105,21 +117,49 @@ ${message}
               <td style="color: #56d364;">"${safeSubject}"</td>
             </tr>
           </table>
-          
+
           <p style="color: #bc8cff;">### Message:</p>
           <div style="background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 15px; margin-top: 10px;">
             <p style="color: #8b949e; white-space: pre-wrap;">${safeMessage}</p>
           </div>
-          
+
           <p style="color: #6e7681; margin-top: 20px; font-size: 12px;">
             Sent from markestella.dev portfolio
           </p>
         </div>
       `,
-    };
+    });
 
-    // Send email
-    await transporter.sendMail(mailOptions);
+    await transporter.sendMail({
+      from: fromEmail,
+      to: email,
+      replyTo: contactEmail,
+      subject: conversationSubject,
+      messageId: autoReplyMessageId,
+      text: `Hi ${name},
+
+Thanks for reaching out through my portfolio. I received your message and will get back to you as soon as I can.
+
+Your message:
+Subject: ${subject}
+
+${message}
+
+Best,
+Mark Estella
+`,
+      html: `
+        <div style="font-family: Arial, sans-serif; background: #f7f4ed; color: #1a1311; padding: 24px; border-radius: 8px; line-height: 1.6;">
+          <p>Hi ${safeName},</p>
+          <p>Thanks for reaching out through my portfolio. I received your message and will get back to you as soon as I can.</p>
+          <div style="border-left: 4px solid #d4a847; padding-left: 16px; margin: 20px 0;">
+            <p style="margin: 0 0 8px;"><strong>Subject:</strong> ${safeSubject}</p>
+            <p style="white-space: pre-wrap; margin: 0;">${safeMessage}</p>
+          </div>
+          <p>Best,<br />Mark Estella</p>
+        </div>
+      `,
+    });
 
     return NextResponse.json(
       { message: 'Message sent successfully' },
