@@ -8,6 +8,14 @@ interface ContactFormData {
   message: string;
 }
 
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
 export async function POST(request: NextRequest) {
   try {
     const body: ContactFormData = await request.json();
@@ -30,8 +38,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const requiredEnvVars = ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS'];
+    const missingEnvVars = requiredEnvVars.filter((key) => !process.env[key]);
+
+    if (missingEnvVars.length > 0) {
+      console.error(`Missing contact form environment variables: ${missingEnvVars.join(', ')}`);
+
+      return NextResponse.json(
+        { error: 'Contact form is not configured' },
+        { status: 500 }
+      );
+    }
+
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeSubject = escapeHtml(subject);
+    const safeMessage = escapeHtml(message);
+
     // Create transporter using SMTP
-    // Configure these environment variables in your Vercel project
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: parseInt(process.env.SMTP_PORT || '587'),
@@ -70,21 +94,21 @@ ${message}
           <table style="margin: 20px 0; color: #e6edf3;">
             <tr>
               <td style="color: #39c5cf; padding-right: 10px;">name:</td>
-              <td style="color: #56d364;">"${name}"</td>
+              <td style="color: #56d364;">"${safeName}"</td>
             </tr>
             <tr>
               <td style="color: #39c5cf; padding-right: 10px;">email:</td>
-              <td style="color: #56d364;">"${email}"</td>
+              <td style="color: #56d364;">"${safeEmail}"</td>
             </tr>
             <tr>
               <td style="color: #39c5cf; padding-right: 10px;">subject:</td>
-              <td style="color: #56d364;">"${subject}"</td>
+              <td style="color: #56d364;">"${safeSubject}"</td>
             </tr>
           </table>
           
           <p style="color: #bc8cff;">### Message:</p>
           <div style="background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 15px; margin-top: 10px;">
-            <p style="color: #8b949e; white-space: pre-wrap;">${message}</p>
+            <p style="color: #8b949e; white-space: pre-wrap;">${safeMessage}</p>
           </div>
           
           <p style="color: #6e7681; margin-top: 20px; font-size: 12px;">

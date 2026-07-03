@@ -7,6 +7,7 @@ export default function VintageContactSection() {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
+    subject: '',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,12 +23,22 @@ export default function VintageContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
       setSubmitStatus('success');
-      setFormState({ name: '', email: '', message: '' });
+      setFormState({ name: '', email: '', subject: '', message: '' });
     } catch {
       setSubmitStatus('error');
     } finally {
@@ -149,6 +160,22 @@ export default function VintageContactSection() {
                     onChange={handleChange}
                     required
                     placeholder="your@email.com"
+                    className="w-full px-4 py-3 bg-[var(--espresso-600)] border border-[var(--ide-tab-border)] rounded text-[var(--parchment-100)] placeholder:text-[var(--parchment-500)] focus:outline-none focus:border-[var(--gold-accent)] transition-colors"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-mono text-sm text-[var(--parchment-400)] mb-2">
+                    <span className="syntax-property">subject</span>
+                    <span className="syntax-bracket">:</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    value={formState.subject}
+                    onChange={handleChange}
+                    required
+                    placeholder="Project inquiry"
                     className="w-full px-4 py-3 bg-[var(--espresso-600)] border border-[var(--ide-tab-border)] rounded text-[var(--parchment-100)] placeholder:text-[var(--parchment-500)] focus:outline-none focus:border-[var(--gold-accent)] transition-colors"
                   />
                 </div>
