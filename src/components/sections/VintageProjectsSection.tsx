@@ -92,6 +92,7 @@ export default function VintageProjectsSection() {
                       src={project.image}
                       alt={project.title}
                       fill
+                      unoptimized
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[var(--espresso-800)] via-transparent to-transparent" />
@@ -216,6 +217,7 @@ export default function VintageProjectsSection() {
                     src={selectedProject.image}
                     alt={selectedProject.title}
                     fill
+                    unoptimized
                     className="object-cover"
                   />
                 )}
