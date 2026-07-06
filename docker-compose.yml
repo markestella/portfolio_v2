@@ -6,6 +6,8 @@ services:
     container_name: portfolio-v2
     restart: unless-stopped
     env_file:
+      - path: ./.env
+        required: false
       - path: /etc/portfolio-v2.env
         required: false
     environment:
