@@ -119,6 +119,10 @@ export default function VintageHeroSection() {
               <span>📁</span>
               <span>View My Work</span>
             </Link>
+            <a href="/cv.pdf" download className="btn-outline-vintage inline-flex items-center gap-2">
+              <span>📄</span>
+              <span>Download Resume</span>
+            </a>
             <Link href="#contact" className="btn-outline-vintage inline-flex items-center gap-2">
               <span>💬</span>
               <span>Let&apos;s Talk</span>

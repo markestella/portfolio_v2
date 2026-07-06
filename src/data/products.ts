@@ -55,7 +55,7 @@ export const products: Product[] = [
     ],
     tech: ['Next.js', 'TypeScript', 'Electron', 'SQLite', 'Drizzle ORM', 'React Query', 'Tailwind CSS'],
     presentationUrl: null,
-    demoUrl: null,
+    demoUrl: 'YO4o0fl6ROU?si=H3WSDiAYwXqreFxt',
     inquirySubject: 'FuelSuite Gas Station POS inquiry',
   },
 ];

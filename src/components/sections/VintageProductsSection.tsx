@@ -1,8 +1,10 @@
 'use client';
 
 import Image from 'next/image';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { products } from '@/data/products';
+import { getYouTubeEmbedUrl } from '@/lib/youtube';
 
 const statusLabels = {
   available: 'Available',
@@ -11,6 +13,8 @@ const statusLabels = {
 };
 
 export default function VintageProductsSection() {
+  const [playingProductId, setPlayingProductId] = useState<string | null>(null);
+
   return (
     <section className="section relative" id="products">
       <div className="grid-pattern opacity-20" />
@@ -50,15 +54,25 @@ export default function VintageProductsSection() {
                 className="vintage-card overflow-hidden"
               >
                 <div className="relative aspect-video w-full overflow-hidden border-b border-[var(--ide-tab-border)] bg-[var(--espresso-900)]">
-                  <Image
-                    src={product.image}
-                    alt={`${product.name} product screenshot`}
-                    fill
-                    sizes="(min-width: 1024px) 1100px, 100vw"
-                    className="object-cover object-top"
-                    priority={index === 0}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--espresso-900)]/80 via-transparent to-transparent" />
+                  {product.demoUrl && playingProductId === product.id ? (
+                    <iframe
+                      src={getYouTubeEmbedUrl(product.demoUrl, true)}
+                      title={`${product.name} product demo`}
+                      className="absolute inset-0 h-full w-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <Image
+                      src={product.image}
+                      alt={`${product.name} product screenshot`}
+                      fill
+                      sizes="(min-width: 1024px) 1100px, 100vw"
+                      className="object-cover object-top"
+                      priority={index === 0}
+                    />
+                  )}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--espresso-900)]/80 via-transparent to-transparent" />
                   <div className="absolute left-4 right-4 top-4 flex flex-wrap items-center gap-3">
                     <span className="px-2 py-1 text-xs font-mono bg-[var(--gold-accent)] text-[var(--espresso-900)] rounded">
                       PRODUCT-{String(index + 1).padStart(3, '0')}
@@ -67,14 +81,26 @@ export default function VintageProductsSection() {
                       {statusLabels[product.status]}
                     </span>
                   </div>
-                  <div className="absolute left-4 right-4 bottom-4">
-                    <h3 className="text-2xl sm:text-4xl font-bold text-[var(--parchment-100)] drop-shadow">
-                      {product.name}
-                    </h3>
-                    <p className="mt-2 max-w-2xl text-sm sm:text-base text-[var(--gold-accent)] drop-shadow">
-                      {product.tagline}
-                    </p>
-                  </div>
+                  {product.demoUrl && playingProductId !== product.id && (
+                    <button
+                      type="button"
+                      onClick={() => setPlayingProductId(product.id)}
+                      className="absolute inset-0 m-auto h-14 w-48 rounded bg-[var(--gold-accent)] text-[var(--espresso-900)] font-mono text-sm font-bold shadow-lg hover:brightness-110 transition"
+                      aria-label={`Play product demo for ${product.name}`}
+                    >
+                      ▶ Play Product Demo
+                    </button>
+                  )}
+                  {playingProductId !== product.id && (
+                    <div className="absolute left-4 right-4 bottom-4">
+                      <h3 className="text-2xl sm:text-4xl font-bold text-[var(--parchment-100)] drop-shadow">
+                        {product.name}
+                      </h3>
+                      <p className="mt-2 max-w-2xl text-sm sm:text-base text-[var(--gold-accent)] drop-shadow">
+                        {product.tagline}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
                 <div className="grid lg:grid-cols-[0.85fr_1.15fr]">
