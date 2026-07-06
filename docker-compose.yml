@@ -1,0 +1,16 @@
+services:
+  portfolio-v2:
+    build:
+      context: .
+    image: portfolio-v2:latest
+    container_name: portfolio-v2
+    restart: unless-stopped
+    env_file:
+      - path: /etc/portfolio-v2.env
+        required: false
+    environment:
+      NODE_ENV: production
+      PORT: 3003
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "127.0.0.1:3003:3003"
