@@ -4,10 +4,12 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects, Project } from '@/data/projects';
+import { getYouTubeEmbedUrl } from '@/lib/youtube';
 
 export default function VintageProjectsSection() {
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const categories = ['all', ...new Set(projects.map(p => p.category))];
 
@@ -79,7 +81,10 @@ export default function VintageProjectsSection() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                   className="vintage-card overflow-hidden group cursor-pointer"
-                  onClick={() => setSelectedProject(project)}
+                  onClick={() => {
+                    setSelectedProject(project);
+                    setIsVideoPlaying(false);
+                  }}
                 >
                   {/* Project Image */}
                   <div className="relative h-48 overflow-hidden">
@@ -184,27 +189,54 @@ export default function VintageProjectsSection() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
-            onClick={() => setSelectedProject(null)}
+            onClick={() => {
+              setSelectedProject(null);
+              setIsVideoPlaying(false);
+            }}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="vintage-card max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              className="vintage-card max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="relative h-56">
-                <Image
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--espresso-800)] to-transparent" />
+              <div className="relative aspect-video w-full bg-[var(--espresso-900)]">
+                {selectedProject.video && isVideoPlaying ? (
+                  <iframe
+                    src={getYouTubeEmbedUrl(selectedProject.video, true)}
+                    title={`${selectedProject.title} video demo`}
+                    className="absolute inset-0 h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                ) : (
+                  <Image
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    fill
+                    className="object-cover"
+                  />
+                )}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--espresso-800)] to-transparent" />
+
+                {selectedProject.video && !isVideoPlaying && (
+                  <button
+                    type="button"
+                    onClick={() => setIsVideoPlaying(true)}
+                    className="absolute inset-0 m-auto h-14 w-44 rounded bg-[var(--gold-accent)] text-[var(--espresso-900)] font-mono text-sm font-bold shadow-lg hover:brightness-110 transition"
+                    aria-label={`Play video demo for ${selectedProject.title}`}
+                  >
+                    ▶ Play Video
+                  </button>
+                )}
                 
                 <button
-                  onClick={() => setSelectedProject(null)}
+                  onClick={() => {
+                    setSelectedProject(null);
+                    setIsVideoPlaying(false);
+                  }}
                   className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-[var(--espresso-800)]/90 rounded text-[var(--parchment-300)] hover:text-[var(--parchment-100)]"
                 >
                   ✕
@@ -246,7 +278,7 @@ export default function VintageProjectsSection() {
                   </div>
                 </div>
 
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <a
                     href={selectedProject.codeLink}
                     target="_blank"
@@ -263,6 +295,16 @@ export default function VintageProjectsSection() {
                   >
                     Live Demo
                   </a>
+                  {selectedProject.interactiveDemoLink && (
+                    <a
+                      href={selectedProject.interactiveDemoLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-outline-vintage flex-1 text-center"
+                    >
+                      Terminal Demo
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>

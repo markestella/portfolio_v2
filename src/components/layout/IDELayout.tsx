@@ -15,6 +15,7 @@ const navItems: NavItem[] = [
   { id: 'home', label: 'Home', filename: 'home.tsx', icon: '📄' },
   { id: 'about', label: 'About', filename: 'about.tsx', icon: '📄' },
   { id: 'projects', label: 'Projects', filename: 'projects.tsx', icon: '📁' },
+  { id: 'products', label: 'Products', filename: 'products.tsx', icon: '🧾' },
   { id: 'tech', label: 'Skills', filename: 'skills.tsx', icon: '⚙️' },
   { id: 'certificates', label: 'Certificates', filename: 'certs.tsx', icon: '🏆' },
   { id: 'contact', label: 'Contact', filename: 'contact.tsx', icon: '💬' },

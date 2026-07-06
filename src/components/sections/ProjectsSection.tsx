@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { projects, Project } from '@/data/projects';
+import { getYouTubeEmbedUrl } from '@/lib/youtube';
 
 const categoryColors: Record<string, { bg: string; text: string; glow: string }> = {
   'Frontend': { bg: 'rgba(34, 211, 238, 0.15)', text: 'var(--accent-cyan)', glow: 'var(--glow-cyan)' },
@@ -142,6 +143,7 @@ export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const categories = useMemo(() => {
     const cats = [...new Set(projects.map(p => p.category))];
@@ -155,6 +157,7 @@ export default function ProjectsSection() {
 
   const handleViewDetails = (project: Project) => {
     setSelectedProject(project);
+    setIsVideoPlaying(false);
     setIsDialogOpen(true);
   };
 
@@ -222,7 +225,15 @@ export default function ProjectsSection() {
       </div>
 
       {/* Project Details Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <Dialog
+        open={isDialogOpen}
+        onOpenChange={(open) => {
+          setIsDialogOpen(open);
+          if (!open) {
+            setIsVideoPlaying(false);
+          }
+        }}
+      >
         <DialogContent className="max-w-3xl w-[90vw] max-h-[85vh] flex flex-col bg-[var(--bg-card)] border-[var(--border-primary)] text-white p-0 overflow-hidden">
           {selectedProject && (
             <>
@@ -237,12 +248,33 @@ export default function ProjectsSection() {
                 {/* Media */}
                 <div className="relative aspect-video rounded-xl overflow-hidden border border-[var(--border-secondary)] shrink-0">
                   {selectedProject.video ? (
-                    <iframe
-                      src={`https://www.youtube.com/embed/${selectedProject.video}`}
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
+                    isVideoPlaying ? (
+                      <iframe
+                        src={getYouTubeEmbedUrl(selectedProject.video, true)}
+                        title={`${selectedProject.title} video demo`}
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <>
+                        <Image
+                          src={selectedProject.image}
+                          alt={selectedProject.title}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/45" />
+                        <button
+                          type="button"
+                          onClick={() => setIsVideoPlaying(true)}
+                          className="absolute inset-0 m-auto h-14 w-44 rounded-lg bg-white text-slate-950 font-semibold hover:bg-[var(--blue-400)] hover:text-white transition"
+                          aria-label={`Play video demo for ${selectedProject.title}`}
+                        >
+                          ▶ Play Video
+                        </button>
+                      </>
+                    )
                   ) : (
                     <Image
                       src={selectedProject.image}
@@ -295,6 +327,17 @@ export default function ProjectsSection() {
                       🚀 Live Demo
                     </a>
                   </Button>
+                  {selectedProject.interactiveDemoLink && (
+                    <Button
+                      className="flex-1 bg-[var(--bg-tertiary)] border border-[var(--border-secondary)] hover:border-[var(--accent-cyan)] hover:bg-[var(--bg-tertiary)]"
+                      variant="outline"
+                      asChild
+                    >
+                      <a href={selectedProject.interactiveDemoLink} target="_blank" rel="noopener noreferrer">
+                        Terminal Demo
+                      </a>
+                    </Button>
+                  )}
                 </div>
               </div>
             </>

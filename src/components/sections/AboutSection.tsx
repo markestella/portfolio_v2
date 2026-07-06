@@ -65,8 +65,8 @@ export default function AboutSection() {
                     <div className="space-y-3">
                       {[
                         { icon: '📍', label: 'Location', value: 'Davao City, PH' },
-                        { icon: '💼', label: 'Experience', value: '4+ Years' },
-                        { icon: '🎓', label: 'Education', value: 'BS Computer Eng.' },
+                        { icon: '💼', label: 'Experience', value: '5+ Years' },
+                        { icon: '🎓', label: 'Education', value: 'BS Electronics Eng.' },
                       ].map((item) => (
                         <div key={item.label} className="flex items-center gap-3 p-3 bg-[var(--bg-tertiary)] rounded-xl">
                           <span className="text-xl">{item.icon}</span>

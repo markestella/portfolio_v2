@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function VintageContactSection() {
@@ -12,6 +12,25 @@ export default function VintageContactSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  useEffect(() => {
+    const handlePrefill = (event: Event) => {
+      const customEvent = event as CustomEvent<{ subject?: string }>;
+      const subject = customEvent.detail?.subject;
+
+      if (!subject) {
+        return;
+      }
+
+      setFormState((prev) => ({
+        ...prev,
+        subject,
+      }));
+    };
+
+    window.addEventListener('prefill-contact', handlePrefill);
+    return () => window.removeEventListener('prefill-contact', handlePrefill);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormState(prev => ({

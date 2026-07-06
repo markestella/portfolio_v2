@@ -10,6 +10,7 @@ const navLinks = [
   { href: '#home', label: 'Home', icon: '🏠' },
   { href: '#about', label: 'About', icon: '👤' },
   { href: '#projects', label: 'Projects', icon: '📁' },
+  { href: '#products', label: 'Products', icon: '🧾' },
   { href: '#tech', label: 'Skills', icon: '🛠️' },
   { href: '#certificates', label: 'Certificates', icon: '🏆' },
   { href: '#contact', label: 'Contact', icon: '💬' },
