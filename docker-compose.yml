@@ -16,3 +16,8 @@ services:
       HOSTNAME: 0.0.0.0
     ports:
       - "127.0.0.1:3003:3003"
+    volumes:
+      - portfolio-v2-data:/app/data
+
+volumes:
+  portfolio-v2-data:

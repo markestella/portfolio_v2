@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
+import { promises as fs } from 'fs';
 import nodemailer from 'nodemailer';
+import path from 'path';
+
+export const runtime = 'nodejs';
 
 interface ContactFormData {
   name: string;
@@ -17,6 +22,133 @@ const escapeHtml = (value: string) =>
     .replace(/'/g, '&#39;');
 
 const normalizeWhitespace = (value: string) => value.trim().replace(/\s+/g, ' ');
+
+interface ContactRateLimitEntry {
+  usedAt: string;
+  emailHash: string;
+  ipAddress: string | null;
+}
+
+interface ContactRateLimitStore {
+  usedKeys: Record<string, ContactRateLimitEntry>;
+}
+
+const getRateLimitStorePath = () =>
+  process.env.CONTACT_RATE_LIMIT_STORE_PATH?.trim() ||
+  path.join(process.cwd(), 'data', 'contact-rate-limit.json');
+
+const hashValue = (value: string) => crypto.createHash('sha256').update(value).digest('hex');
+
+const getClientIp = (request: NextRequest) => {
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0]?.trim() || null;
+  }
+
+  return request.headers.get('x-real-ip')?.trim() || null;
+};
+
+const getVisitorKey = (request: NextRequest) => {
+  const visitorKey = request.headers.get('x-contact-visitor-key')?.trim() || '';
+  return visitorKey.length >= 16 && visitorKey.length <= 120 ? visitorKey : null;
+};
+
+const readRateLimitStore = async (): Promise<ContactRateLimitStore> => {
+  try {
+    const content = await fs.readFile(getRateLimitStorePath(), 'utf8');
+    const parsed = JSON.parse(content) as ContactRateLimitStore;
+
+    return {
+      usedKeys: parsed.usedKeys && typeof parsed.usedKeys === 'object' ? parsed.usedKeys : {},
+    };
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      return { usedKeys: {} };
+    }
+
+    throw error;
+  }
+};
+
+const writeRateLimitStore = async (store: ContactRateLimitStore) => {
+  const storePath = getRateLimitStorePath();
+  await fs.mkdir(path.dirname(storePath), { recursive: true });
+  await fs.writeFile(storePath, `${JSON.stringify(store, null, 2)}\n`, 'utf8');
+};
+
+let contactRateLimitQueue = Promise.resolve();
+
+const reserveContactSend = async (request: NextRequest, email: string) => {
+  const visitorKey = getVisitorKey(request);
+
+  if (!visitorKey) {
+    return {
+      allowed: false as const,
+      status: 400,
+      error: 'Missing visitor key.',
+      release: async () => undefined,
+    };
+  }
+
+  const keyHash = hashValue(visitorKey);
+  const emailHash = hashValue(email.toLowerCase());
+  const ipAddress = getClientIp(request);
+
+  const reservation = contactRateLimitQueue.then(async () => {
+    const store = await readRateLimitStore();
+
+    if (store.usedKeys[keyHash]) {
+      return {
+        allowed: false as const,
+        status: 429,
+        error: 'This visitor has already sent a message.',
+        release: async () => undefined,
+      };
+    }
+
+    store.usedKeys[keyHash] = {
+      usedAt: new Date().toISOString(),
+      emailHash,
+      ipAddress,
+    };
+
+    await writeRateLimitStore(store);
+
+    return {
+      allowed: true as const,
+      release: async () => {
+        contactRateLimitQueue = contactRateLimitQueue.then(async () => {
+          const latestStore = await readRateLimitStore();
+          delete latestStore.usedKeys[keyHash];
+          await writeRateLimitStore(latestStore);
+        });
+
+        await contactRateLimitQueue;
+      },
+    };
+  });
+
+  contactRateLimitQueue = reservation.then(
+    () => undefined,
+    () => undefined
+  );
+
+  return reservation;
+};
+
+const releaseContactSendReservation = async (
+  reservation: Awaited<ReturnType<typeof reserveContactSend>> | null
+) => {
+  if (!reservation?.allowed) {
+    return;
+  }
+
+  try {
+    await reservation.release();
+  } catch (error) {
+    console.error('Failed to release contact rate limit reservation:', error);
+  }
+};
 
 type SmtpConfig =
   | {
@@ -82,6 +214,8 @@ const getSmtpConfig = (): SmtpConfig => {
 };
 
 export async function POST(request: NextRequest) {
+  let contactSendReservation: Awaited<ReturnType<typeof reserveContactSend>> | null = null;
+
   try {
     const body: ContactFormData = await request.json();
     const name = normalizeWhitespace(body.name || '');
@@ -111,9 +245,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    contactSendReservation = await reserveContactSend(request, email);
+    if (!contactSendReservation.allowed) {
+      return NextResponse.json(
+        { error: contactSendReservation.error },
+        { status: contactSendReservation.status }
+      );
+    }
+
     const smtp = getSmtpConfig();
     if (!smtp.configured) {
       console.error(`Missing contact form environment variables: ${smtp.missing.join(', ')}`);
+      await releaseContactSendReservation(contactSendReservation);
 
       return NextResponse.json(
         { error: 'Contact form is not configured.' },
@@ -229,6 +372,8 @@ ${smtp.siteUrl}
       { status: 200 }
     );
   } catch (error) {
+    await releaseContactSendReservation(contactSendReservation);
+
     console.error('Contact form error:', error);
     return NextResponse.json(
       { error: 'Failed to send message.' },

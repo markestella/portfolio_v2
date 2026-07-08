@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { getContactVisitorKey } from '@/lib/contactVisitorKey';
 
 export default function VintageContactSection() {
   const [formState, setFormState] = useState({
@@ -11,7 +12,7 @@ export default function VintageContactSection() {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'limited' | 'error'>('idle');
 
   useEffect(() => {
     const handlePrefill = (event: Event) => {
@@ -48,11 +49,17 @@ export default function VintageContactSection() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-Contact-Visitor-Key': getContactVisitorKey(),
         },
         body: JSON.stringify(formState),
       });
 
       if (!response.ok) {
+        if (response.status === 429) {
+          setSubmitStatus('limited');
+          return;
+        }
+
         throw new Error('Failed to send message');
       }
 
@@ -251,6 +258,16 @@ export default function VintageContactSection() {
                     className="p-4 bg-[var(--destructive)]/20 border border-[var(--destructive)]/30 rounded text-[var(--destructive)] text-sm text-center"
                   >
                     ❌ Failed to send message. Please try again.
+                  </motion.div>
+                )}
+
+                {submitStatus === 'limited' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 bg-[var(--destructive)]/20 border border-[var(--destructive)]/30 rounded text-[var(--destructive)] text-sm text-center"
+                  >
+                    You already sent a message.
                   </motion.div>
                 )}
               </form>

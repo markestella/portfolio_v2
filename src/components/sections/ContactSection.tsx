@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { getContactVisitorKey } from '@/lib/contactVisitorKey';
 
 interface FormData {
   name: string;
@@ -23,7 +24,7 @@ export default function ContactSection() {
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'limited' | 'error'>('idle');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -34,6 +35,7 @@ export default function ContactSection() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-Contact-Visitor-Key': getContactVisitorKey(),
         },
         body: JSON.stringify(formData),
       });
@@ -41,6 +43,8 @@ export default function ContactSection() {
       if (response.ok) {
         setSubmitStatus('success');
         setFormData({ name: '', email: '', subject: '', message: '' });
+      } else if (response.status === 429) {
+        setSubmitStatus('limited');
       } else {
         setSubmitStatus('error');
       }
@@ -257,6 +261,11 @@ export default function ContactSection() {
                   {submitStatus === 'error' && (
                     <div className="p-4 bg-[var(--accent-red)]/20 border border-[var(--accent-red)]/30 rounded-xl text-center">
                       <span className="text-[var(--accent-red)]">❌ Failed to send message. Please try again or email me directly.</span>
+                    </div>
+                  )}
+                  {submitStatus === 'limited' && (
+                    <div className="p-4 bg-[var(--accent-red)]/20 border border-[var(--accent-red)]/30 rounded-xl text-center">
+                      <span className="text-[var(--accent-red)]">You already sent a message from this visitor key.</span>
                     </div>
                   )}
                 </form>
