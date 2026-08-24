@@ -5,6 +5,7 @@ import VintageHeroSection from "@/components/sections/VintageHeroSection";
 import VintageAboutSection from "@/components/sections/VintageAboutSection";
 import VintageProjectsSection from "@/components/sections/VintageProjectsSection";
 import VintageProductsSection from "@/components/sections/VintageProductsSection";
+import VintagePresentationsSection from "@/components/sections/VintagePresentationsSection";
 import VintageTechSection from "@/components/sections/VintageTechSection";
 import VintageCertificatesSection from "@/components/sections/VintageCertificatesSection";
 import VintageContactSection from "@/components/sections/VintageContactSection";
@@ -18,6 +19,7 @@ export default function Home() {
         </div>
         <VintageAboutSection />
         <VintageProjectsSection />
+        <VintagePresentationsSection />
         <VintageProductsSection />
         <VintageTechSection />
         <VintageCertificatesSection />

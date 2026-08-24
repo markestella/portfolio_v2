@@ -15,6 +15,7 @@ const navItems: NavItem[] = [
   { id: 'home', label: 'Home', filename: 'home.tsx', icon: '📄' },
   { id: 'about', label: 'About', filename: 'about.tsx', icon: '📄' },
   { id: 'projects', label: 'Projects', filename: 'projects.tsx', icon: '📁' },
+  { id: 'presentations', label: 'Presentations', filename: 'presentations.json', icon: '▶️' },
   { id: 'products', label: 'Products', filename: 'products.tsx', icon: '🧾' },
   { id: 'tech', label: 'Skills', filename: 'skills.tsx', icon: '⚙️' },
   { id: 'certificates', label: 'Certificates', filename: 'certs.tsx', icon: '🏆' },
@@ -232,7 +233,7 @@ export default function IDELayout({ children, activeSection = 'home' }: IDELayou
                   >
                     <span className="sidebar-item-icon">{item.icon}</span>
                     <span>{item.label}</span>
-                    <span className="sidebar-item-ext">.tsx</span>
+                    <span className="sidebar-item-ext">.{item.filename.split('.').pop()}</span>
                   </a>
                 ))}
 

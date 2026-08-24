@@ -1,0 +1,42 @@
+[
+  {
+    "id": "kassio-pos-inventory",
+    "title": "Kassio — POS & Inventory",
+    "category": "Retail Operations",
+    "description": "A customizable POS and inventory platform that connects checkout, stock, purchasing, reporting, branches, and warehouses—with offline-ready selling and an interactive checkout simulation.",
+    "url": "https://pos-inventory-proposal.vercel.app/",
+    "accent": "#d4a847",
+    "slides": 7,
+    "highlights": ["Interactive POS demo", "Live inventory", "Multi-branch"]
+  },
+  {
+    "id": "maligaya-taxi",
+    "title": "Maligaya Taxi Platform",
+    "category": "Mobility Platform",
+    "description": "A connected taxi booking and operations platform for passengers, drivers, dispatchers, and management—with live trip visibility, safety controls, and an interactive multi-app simulation.",
+    "url": "https://maligaya-taxi-proposal.vercel.app/",
+    "accent": "#f2c14e",
+    "slides": 15,
+    "highlights": ["Passenger & driver apps", "Live dispatch", "Pricing explorer"]
+  },
+  {
+    "id": "fuelsuite",
+    "title": "FuelSuite",
+    "category": "Gas Station POS",
+    "description": "An offline-first gas station operations platform that brings shifts, pumps, cash, inventory, customer credit, and reporting into one dependable desktop experience.",
+    "url": "https://fuel-suite-presentation.vercel.app/",
+    "accent": "#3dd6a3",
+    "slides": 8,
+    "highlights": ["Offline-first", "Shift control", "Station analytics"]
+  },
+  {
+    "id": "3deality",
+    "title": "3Deality — Unified Commerce",
+    "category": "3D Commerce & POS",
+    "description": "A unified 3D ecommerce and point-of-sale proposal that connects product discovery, live customization, online payment, store operations, and secure pickup in one journey.",
+    "url": "https://3deality-pos-proposal.vercel.app/",
+    "accent": "#9fc68b",
+    "slides": 10,
+    "highlights": ["3D configurator", "Unified checkout", "Offline-ready POS"]
+  }
+]
